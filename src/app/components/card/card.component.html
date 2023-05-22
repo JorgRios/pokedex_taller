@@ -6,7 +6,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <img [src]="pokemon.sprites.other.home.front_default" alt="{{pokemon.name}}" height="450px">
+            <img [src]="pokemon.sprites.other.home.front_default" alt="{{pokemon.name}}" height="500px">
             <p>
                 <b>Tipo: </b><span>{{pokemon.types[0].type.name}}</span>
             </p>
@@ -20,11 +20,9 @@
                 <b>Ataque: </b><span>{{pokemon.stats[1].base_stat}}</span>
             </p>
             <b>Movimientos</b> 
-           
             <span *ngFor="let movimiento of pokemon.moves">
                 {{movimiento.move.name}}, 
             </span>
-            
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

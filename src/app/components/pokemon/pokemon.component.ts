@@ -17,7 +17,6 @@ export class PokemonComponent implements OnInit {
   ngOnInit(): void {
     this.getPokemons();
   }
-
   getPokemons () {
     this.pokemons = [];
     this.pokeService.getPokemons(1).subscribe(
@@ -34,7 +33,6 @@ export class PokemonComponent implements OnInit {
       }
     );
   }
-  
   buscarPokemons(name:string) {
     name = name.toLowerCase()
     this.pokeService.getPokemonByName(name).subscribe(
@@ -49,7 +47,6 @@ export class PokemonComponent implements OnInit {
       this.getPokemons();
     }
   }
-
   selecionarPokemon(name){
     name = name.toLowerCase()
     this.pokeService.getPokemonByName(name).subscribe(

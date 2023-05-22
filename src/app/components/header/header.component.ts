@@ -8,12 +8,9 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class HeaderComponent implements OnInit {
 
   @Output() public pokeBusqueda : EventEmitter<string> = new EventEmitter();
-
   constructor() { }
-
   ngOnInit(): void {
   }
-
   buscarPokemons(pokemon:string){
     pokemon = pokemon.toLowerCase()
     this.pokeBusqueda.emit(pokemon);

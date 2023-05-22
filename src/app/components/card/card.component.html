@@ -1,0 +1,34 @@
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Pokemon numero {{pokemon.name}}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <img [src]="pokemon.sprites.other.home.front_default" alt="{{pokemon.name}}" height="450px">
+            <p>
+                <b>Tipo: </b><span>{{pokemon.types[0].type.name}}</span>
+            </p>
+            <p>
+                <b>Altura: </b><span>{{pokemon.height * 10 }} cm</span>
+            </p>
+            <p>
+                <b>Puntos de vida: </b><span>{{pokemon.stats[0].base_stat}}</span>
+            </p>
+            <p>
+                <b>Ataque: </b><span>{{pokemon.stats[1].base_stat}}</span>
+            </p>
+            <b>Movimientos</b> 
+           
+            <span *ngFor="let movimiento of pokemon.moves">
+                {{movimiento.move.name}}, 
+            </span>
+            
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>

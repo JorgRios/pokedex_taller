@@ -1,6 +1,10 @@
-# Pokedex
+# Pokedex con angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.1.
+![Imagen del proyecto](./Capture.PNG)
+
+## Descripcion
+
+En este proyecto se consume la pokeapi con angualar 14 y angular material
 
 ## Development server
 

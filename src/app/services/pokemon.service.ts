@@ -13,9 +13,11 @@ export class PokemonService {
 
   constructor(private http: HttpClient) { }
 
-  getPokemons(page:number, size:number= 52){
-    const offset = size * (page - 1);
-    return this.http.get(`${this.url}?limit=${size}&offset=${offset}`);
+  getPokemons(page: number, limit: number = 12){
+    const offset = (page - 1) * limit;
+    var uri: string = `${this.url}?limit=${limit}&offset=${offset}`
+    console.log(uri)
+    return this.http.get(uri);
   }
 
   getPokemonByName(name:string){

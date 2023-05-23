@@ -13,13 +13,14 @@ export class PokemonComponent implements OnInit {
   constructor(private pokeService: PokemonService) { }
   loading : boolean = true;
   pokemonSelecionado : any;
+  paginaActual: number = 1;
 
   ngOnInit(): void {
     this.getPokemons();
   }
   getPokemons () {
     this.pokemons = [];
-    this.pokeService.getPokemons(1).subscribe(
+    this.pokeService.getPokemons(this.paginaActual).subscribe(
       (response:any) => {
         response.results.forEach(result => {
           if(result.name != null){
@@ -55,5 +56,47 @@ export class PokemonComponent implements OnInit {
         this.pokemonSelecionado = res;
       }
     );
+  }
+
+  paginaMas(){
+    this.paginaActual += 1
+    this.pokeService.getPokemons(this.paginaActual).subscribe(
+      (response:any) => {
+        this.pokemons = []
+        response.results.forEach(result => {
+          if(result.name != null){
+            this.pokeService.getPokemonByName(result.name).subscribe(
+              (uniqueResponse:any) => {
+                this.pokemons.push(uniqueResponse);
+              }
+            );
+          }
+        });
+      }
+    );
+  }
+
+  paginaMenos(){
+    if(this.paginaActual == 1){
+      this.paginaActual = 1
+    }else{
+      this.paginaActual -= 1
+    }
+
+    this.pokeService.getPokemons(this.paginaActual).subscribe(
+      (response:any) => {
+        this.pokemons = []
+        response.results.forEach(result => {
+          if(result.name != null){
+            this.pokeService.getPokemonByName(result.name).subscribe(
+              (uniqueResponse:any) => {
+                this.pokemons.push(uniqueResponse);
+              }
+            );
+          }
+        });
+      }
+    );
+    console.log(this.paginaActual)
   }
 }

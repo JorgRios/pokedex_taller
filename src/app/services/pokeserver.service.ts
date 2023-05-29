@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { io } from "socket.io-client";
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,16 @@ export class PokeServer {
   public usuarios$: BehaviorSubject<any> = new BehaviorSubject([]);
   public peleas$: BehaviorSubject<any> = new BehaviorSubject([]);
   public pelea$: BehaviorSubject<any> = new BehaviorSubject([]);
+  public ganador$: BehaviorSubject<string> = new BehaviorSubject('');
   
   constructor() {}
 
-  socket = io('http://localhost:3000');
+  private url: string = `${environment.SOCKET}`
+  
+  socket = io(this.url);
 
   public login(nombre: string){
+    console.log('Escuchando en: '+environment.SOCKET)
     this.socket.emit('login', nombre);
   }
 
@@ -51,6 +56,18 @@ export class PokeServer {
     });    
     return this.peleas$.asObservable();
   };
+
+  public atacar = (danio:number) => {
+    this.socket.emit('atacar', danio);
+  };
+
+  public finalizar = () => {
+    this.socket.on('finalizada', (ganador) =>{
+      this.ganador$.next(ganador)
+    });    
+    return this.ganador$.asObservable();
+  };
+  
   // public sendMessage(message: string) {
   //   this.socket.emit('message', message);
   // }

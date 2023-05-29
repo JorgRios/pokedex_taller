@@ -26,6 +26,14 @@ export class PokemonComponent implements OnInit {
   pokeadversario: any = {};
   pokeretador: any = {};
   nombre_adversario: string = '';
+  vidaretador: number ;
+  vidaadversario: number ;
+  nuevoGanador: string = '';
+  finalizado:boolean = false;
+  danioR: boolean = false;
+  danioA: boolean = false;
+  letreroAdversario: string ='';
+  letreroRetador: string ='';
 
   ngOnInit(): void {
     this.getPokemons();
@@ -54,6 +62,28 @@ export class PokemonComponent implements OnInit {
           }
         );
         this.nombre_adversario = arena[0].adversario;
+        
+        if(this.vidaretador != arena[0].saludpk1 ){
+          let danio: number = this.vidaretador-arena[0].saludpk1;
+          this.vidaretador = arena[0].saludpk1;  
+          this.letreroRetador = this.cuantoGenere(danio)
+          console.log(this.letreroRetador)
+          this.mostrarDanioRetador()
+          //calcular daño
+          console.log('Tu adversario te ha dañado')
+        }
+        if(this.vidaadversario != arena[0].saludpk2){
+          let danio: number = this.vidaadversario-arena[0].saludpk2;
+          this.vidaadversario = arena[0].saludpk2;
+          this.letreroAdversario = this.cuantoGenere(danio)
+          console.log(this.letreroAdversario )
+          this.mostrarDanioAdversario()
+          //calcular daño
+          console.log('Has dañado a tu adversario')
+        }
+        if(arena[0].estado =='progreso'){
+          console.log('pelea en progreso')
+        }
       }
 
       if(arena[0].adversario == this.nombre){
@@ -70,9 +100,14 @@ export class PokemonComponent implements OnInit {
           }
         );
         this.nombre_adversario = arena[0].retador;
+        this.vidaretador = arena[0].saludpk2;
+        this.vidaadversario = arena[0].saludpk1;
       }
     })
-
+    this.PokeServer.finalizar().subscribe((ganador: string) => {
+      /**mostramos el letrero del ganador */
+      this.nuevoGanador = ganador
+    })
     
 
     // this.PokeServer.arena().suscribe((datos:any[]) => {
@@ -80,7 +115,19 @@ export class PokemonComponent implements OnInit {
     // })
   }
 
+  mostrarDanioRetador(){
+    this.danioR = true;
+    setTimeout(() => {
+      this.danioR = false;
+    }, 2000); 
+  }
 
+  mostrarDanioAdversario(){
+    this.danioA = true;
+    setTimeout(() => {
+      this.danioA = false;
+    }, 2000); 
+  }
   getPokemons () {
     this.pokemons = [];
     this.pokeService.getPokemons(this.paginaActual).subscribe(
@@ -192,4 +239,39 @@ export class PokemonComponent implements OnInit {
     this.PokeServer.peleando(usuario)
   }
   
+  atacar(){
+    const ataque = this.generarAtaque()
+    console.log(ataque)
+    const danio: any = ataque[0];
+    this.PokeServer.atacar(danio)
+  }
+
+ 
+  generarAtaque(){
+    const numero : number = Math.floor(Math.random() * 20) + 1;
+    let mensaje = "";
+  
+    if (numero < 5) {
+      mensaje = "El ataque no funcionó.";
+    } else if (numero > 15) {
+      mensaje = "¡Ataque crítico!";
+    } else {
+      mensaje = "Ataque normal.";
+    }
+    return [numero, mensaje];
+  }
+
+
+  cuantoGenere(numero:number){
+    let mensaje = "";
+    if (numero < 5) {
+      mensaje = "El ataque no funcionó.";
+    } else if (numero > 15) {
+      mensaje = "¡Ataque crítico!";
+    } else {
+      mensaje = "Ataque normal.";
+    }
+    return mensaje;
+  }
 }
+

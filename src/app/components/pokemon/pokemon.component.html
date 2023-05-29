@@ -47,15 +47,47 @@
 			Estas peleando contra {{nombre_adversario}}
 			<table> 
 				<tr>
-					<td>{{pokeadversario.name}}</td>
+					<td>
+						<div *ngIf="danioA">
+							<p>{{letreroAdversario}}</p>
+						</div>
+						{{pokeadversario.name}} <br>
+						<div class="progress">
+							<div class="progress-bar bg-danger" 
+								role="progressbar" 
+								aria-label="Success example" 
+								[style.width]="vidaadversario + '%'" 
+								aria-valuemin="0" 
+								aria-valuemax="100"></div>
+						</div>
+					</td>
 					<td><img *ngIf="pokeadversario.sprites && pokeadversario.sprites.front_default" [src]="pokeadversario.sprites.front_default" alt="{{pokeadversario.name}}" height="150px"></td>
 				</tr>
 				<tr>
 					<td><img *ngIf="pokeretador.sprites && pokeretador.sprites.back_default" [src]="pokeretador.sprites.back_default" alt="{{pokeretador.name}}" height="150px"></td>
-					<td>{{pokeretador.name}}</td>
+					<td>
+						<div *ngIf="danioR">
+							<p>{{letreroRetador}}</p>
+						</div>
+						{{pokeretador.name}}
+
+						<div class="progress">
+							<div class="progress-bar bg-success" 
+								role="progressbar" 
+								aria-label="Success example" 
+								[style.width]="vidaretador + '%'" 
+								aria-valuemin="0" 
+								aria-valuemax="100"></div>
+						</div>
+					</td>
 				</tr>
 			</table>
-			<button type="button" class="btn btn-dark" >¡Atacar !</button> 
+			<button type="button" class="btn btn-dark" (click)="atacar()">¡Atacar !</button> 
+		</span>
+		<span *ngIf="finalizado">
+			<div class="alert alert-info" role="alert">
+				Ha ganado <b>{{nuevoGanador}}</b>
+			</div>
 		</span>
 	</div>
 </div>

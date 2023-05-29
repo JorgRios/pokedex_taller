@@ -1,7 +1,10 @@
 <nav class="navbar navbar-expand-lg bg-light">
 	<div class="container-fluid">
+	  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	  </button>
 	  <a class="navbar-brand" href="/">PokéDex</a>
-	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 		<ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
 		<form class="d-flex" role="login">
 			<div class="btn-group" *ngIf="!logeado">
@@ -9,7 +12,7 @@
 				<button class="btn btn-info" (click)="login(nombre.value)">Entrar</button>
 			</div>
 		</form>
-		<div *ngIf="logeado"><h4>Usuario: {{nombreU}}</h4></div> &nbsp;
+		<span *ngIf="logeado"><h4>Usuario: {{nombreU}}</h4></span> &nbsp;
 		<form class="d-flex" role="search">
 			<div class="btn-group">
 				<input class="form-control" placeholder="Nombre pokemon" type="text" #buscarPokemon (keyup.enter)="buscarPokemons(buscarPokemon.value)">

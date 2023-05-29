@@ -24,4 +24,7 @@ export class PokemonService {
     return this.http.get(`${this.url}/${name}`);
   }
 
+  getPokemonById(id:number){
+    return this.http.get(`${this.url}/${id}`);
+  }
 }

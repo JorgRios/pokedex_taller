@@ -3,6 +3,13 @@
 	  <a class="navbar-brand" href="/">PokéDex</a>
 	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
+		<form class="d-flex" role="login">
+			<div class="btn-group" *ngIf="!logeado">
+				<input type="text" class="form-control" placeholder="Nombre" #nombre (keyup.enter)="login(nombre.value)">
+				<button class="btn btn-info" (click)="login(nombre.value)">Entrar</button>
+			</div>
+		</form>
+		<div *ngIf="logeado"><h4>Usuario: {{nombreU}}</h4></div> &nbsp;
 		<form class="d-flex" role="search">
 			<div class="btn-group">
 				<input class="form-control" placeholder="Nombre pokemon" type="text" #buscarPokemon (keyup.enter)="buscarPokemons(buscarPokemon.value)">

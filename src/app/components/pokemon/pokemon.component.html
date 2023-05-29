@@ -1,18 +1,62 @@
+<app-header (pokeBusqueda)="buscarPokemons($event)" (logueo)="loguear($event)"></app-header>
+<div class="row">
+	<div class="col col-md-2">
+		<span *ngIf="logueado">
 
-<app-header (pokeBusqueda)="buscarPokemons($event)"></app-header>
-<div class="col">
-	<div class="row">
-		<div class="card mb-1 mx-1" style="width: 20rem;" *ngFor="let pokemon of pokemons">
-			<img [src]="pokemon.sprites.other.dream_world.front_default" alt="{{pokemon.name}}" height="150px">
-			<div class="card-body">
-				<hr>
-				<h5 class="card-title">{{pokemon.name | titlecase}} <small># {{pokemon.id }}</small></h5>
-				<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="selecionarPokemon(pokemon.name)">
-					Ver Pokemon!
-				</button>
+		
+			<h4>USUARIOS CONECTADOS</h4>
+			<div *ngFor="let usuario of usuariosLista">
+				<i [ngClass]="{'text-success': usuario.conectado, 'text-secondary': !usuario.conectado}" class="fa fa-circle"></i> {{usuario.nombre}}
+			</div>
+			<span *ngIf="usando" >
+				<h4>Peleas</h4>
+				<div *ngFor="let pelea of peleasLista">
+					{{ pelea.estado }}
+					<button *ngIf="pelea.retador !== nombre" (click)="unirse(pelea.retador)">Unirse</button>
+				</div>
+			</span>
+	</span>
+	</div>
+	<div class="col col-md-8">
+		<div class="row">
+			<div class="card mb-1 mx-1" style="width: 20rem;" *ngFor="let pokemon of pokemons">
+				<img [src]="pokemon.sprites.other.dream_world.front_default" alt="{{pokemon.name}}" height="150px">
+				<div class="card-body">
+					<hr>
+					<h5 class="card-title">{{pokemon.name | titlecase}} <small># {{pokemon.id }}</small></h5>
+					<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="selecionarPokemon(pokemon.name)">
+						Ver Pokemon!
+					</button>
+					<button type="button" class="btn btn-warning" *ngIf="logueado" (click)="usarPokemon(pokemon.id)">
+						Seleccionar
+					</button>
+				</div>
 			</div>
 		</div>
-		
+	</div>
+	<div class="col col-md-1" >
+		<span *ngIf="logueado && pelea">
+			<h4>Pokemon usado</h4>	
+			<div *ngIf="pokemonUsado">
+				<h5>Has seleccionado a {{pokemonUsado.name}}</h5>
+				<img *ngIf="pokemonUsado.sprites && pokemonUsado.sprites.front_default" [src]="pokemonUsado.sprites.front_default" alt="{{pokemonUsado.name}}" height="150px">
+				<button type="button" class="btn btn-danger" (click)="pelear(pokemonUsado.id)">Pelear!</button> 
+			</div>
+		</span>
+		<span *ngIf="!pelea">
+			Estas peleando contra {{nombre_adversario}}
+			<table> 
+				<tr>
+					<td>{{pokeadversario.name}}</td>
+					<td><img *ngIf="pokeadversario.sprites && pokeadversario.sprites.front_default" [src]="pokeadversario.sprites.front_default" alt="{{pokeadversario.name}}" height="150px"></td>
+				</tr>
+				<tr>
+					<td><img *ngIf="pokeretador.sprites && pokeretador.sprites.back_default" [src]="pokeretador.sprites.back_default" alt="{{pokeretador.name}}" height="150px"></td>
+					<td>{{pokeretador.name}}</td>
+				</tr>
+			</table>
+			<button type="button" class="btn btn-dark" >¡Atacar !</button> 
+		</span>
 	</div>
 </div>
 <nav aria-label="Page navigation example">

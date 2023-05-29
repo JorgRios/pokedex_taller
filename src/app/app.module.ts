@@ -10,13 +10,17 @@ import { HeaderComponent } from './components/header/header.component';
 import { PokemonComponent } from './components/pokemon/pokemon.component';
 import { FormsModule } from '@angular/forms';
 import { CardComponent } from './components/card/card.component';
+import { FightComponent } from './fight/fight.component';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     PokemonComponent,
-    CardComponent
+    CardComponent,
+    FightComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
